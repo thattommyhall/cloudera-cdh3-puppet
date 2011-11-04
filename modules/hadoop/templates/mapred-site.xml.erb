@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+
+<!-- Put site-specific property overrides in this file. -->
+
+<configuration>
+  <property>
+    <name>mapred.local.dir</name>
+    <value><%= hadoop_mapred_local_dirs %> </value>
+  </property>
+  
+  <property>
+    <name>mapred.reduce.tasks.speculative.execution</name>
+    <value>false</value>
+  </property>
+    
+  <property>
+    <name>mapred.job.tracker</name>
+    <value>33.33.66.100:9001</value>
+  </property>
+
+  <property>
+    <name>mapred.tasktracker.map.tasks.maximum</name>
+    <value> <%= processorcount %> </value>
+    <description>The maximum number of tasks that will be run simultaneously by a
+    a task tracker
+    </description>
+  </property>
+
+  <property>
+    <name>mapred.tasktracker.reduce.tasks.maximum</name>
+    <value> <%= physicalprocessorcount %> </value>
+    <description>The maximum number of tasks that will be run simultaneously by a
+      a task tracker
+    </description>
+  </property>
+
+  <property>
+    <name>mapred.queue.names</name>
+    <value>default</value>
+    <description>Names of queues</description>
+  </property>
+  
+</configuration>
