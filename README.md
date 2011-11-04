@@ -9,6 +9,7 @@ Testing with Vagrant
 > $ ./run_puppet_master.sh
 
 You can clear the ssl certs of the temporary puppet master with 
+
 > $ ./remove_sll.sh
 
 Might be useful if you want to learn to administer hadoop 
