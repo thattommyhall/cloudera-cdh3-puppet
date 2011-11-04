@@ -1,6 +1,9 @@
-Puppet modules to install hadoop, hbase and java.
-The slave stuff is more tested than the master at the moment as we had a master before I started moving the config to puppet.
+Install Cloudera CDH3 with puppet
+=================================
 
+Puppet modules to install hadoop, hbase and java.
+
+The slave stuff is more tested than the master at the moment as we had a master before I started moving the config to puppet.
 
 Testing with Vagrant
 ====================
