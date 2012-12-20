@@ -1,0 +1,12 @@
+export HBASE_HEAPSIZE=3000
+# Should not use, use HBASE_REGIONSERVER_OPTS instead
+
+# Extra Java runtime options.
+# Below are what we set by default.  May only work with SUN JVM.
+# For more on why as well as other possible settings,
+# see http://wiki.apache.org/hadoop/PerformanceTuning
+export HBASE_OPTS="$HBASE_OPTS -XX:+UseParNewGC -XX:+UseConcMarkSweepGC -XX:CMSInitiatingOccupancyFraction=70 -verbose:gc -XX:+PrintGCDetails -XX:+PrintGCTimeStamps -Xloggc:$HBASE_HOME/logs/gc-$(hostname)-hbase.log"
+
+export HBASE_REGIONSERVER_OPTS="-Xmx20g -Xms20g -Xmn128m"
+
+#search for "concurrent mode failure" or "promotion failed" in the log

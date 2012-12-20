@@ -1,0 +1,15 @@
+export JAVA_HOME=/usr/lib/jvm/java-6-sun
+
+export HADOOP_CLASSPATH=${HADOOP_CLASSPATH}:/home/deploy/logFileStreams/logFileStreams.jar:/usr/lib/hadoop-0.20/conf/lzo/hadoop-lzo-0.4.10.jar
+export JAVA_LIBRARY_PATH=/home/deploy/logFileStreams/lib/native/Linux-amd64-64:/usr/lib/hadoop/lib/native/Linux-amd64-64:/usr/lib/hadoop-0.20/conf/lzo/hadoop-lzo-0.4.10.native/
+
+export HADOOP_NAMENODE_OPTS="-Dcom.sun.management.jmxremote -Xmx21000m -XX:+HeapDumpOnOutOfMemoryError"
+export HADOOP_JOBTRACKER_OPTS="-Dcom.sun.management.jmxremote -Xmx4000m -XX:+HeapDumpOnOutOfMemoryError"
+# export HADOOP_SECONDARYNAMENODE_OPTS=""
+export HADOOP_DATANODE_OPTS="-Dcom.sun.management.jmxremote -Xmx4000m -XX:+HeapDumpOnOutOfMemoryError"
+export HADOOP_TASKTRACKER_OPTS="-Dcom.sun.management.jmxremote -Xmx2000m -XX:+HeapDumpOnOutOfMemoryError"
+# export HADOOP_BALANCER_OPTS=""
+
+
+# The following applies to multiple commands (fs, dfs, fsck, distcp etc)
+# export HADOOP_CLIENT_OPTS

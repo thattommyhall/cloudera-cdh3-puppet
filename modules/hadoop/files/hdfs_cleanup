@@ -1,0 +1,44 @@
+#! /usr/bin/env ruby
+require 'date'
+
+def clean_hive_tmp(user,num_days)
+  delete_before = Date.parse(Time.now.to_s) - num_days
+  IO.popen("hadoop fs -ls /tmp/hive-#{user}").each_line do |line|
+    permissions,replication,user,group,size,mod_date,mod_time,path = *line.split(/\s+/)
+    if (mod_date)
+      if Date.parse(mod_date.to_s) < delete_before
+        if permissions.split('')[0] == 'd'
+          puts line
+          `hadoop fs -rmr -skipTrash #{path};true`
+          dirname = path
+          next
+        end
+        next if path.start_with? dirname
+        puts line
+        `hadoop fs -rm -skipTrash #{path};true`
+      end
+    end
+  end
+end
+
+clean_hive_tmp('root',1)
+clean_hive_tmp('deploy',1)
+
+def clean_hdfs(path, num_days)
+  delete_before = Date.parse(Time.now.to_s) - num_days
+  IO.popen("hadoop fs -lsr #{path}").each_line do |line|
+    split = line.split(/\s+/)
+    next unless split.size == 8
+    next if path.include? '/tmp/hive'
+    permissions,replication,user,group,size,mod_date,mod_time,path = *split
+    mod_date = Date.parse(mod_date)
+    if permissions[0,1] != 'd'
+       if mod_date < delete_before
+         puts line
+         `hadoop fs -rm -skipTrash #{path}; true`
+       end
+    end
+  end
+end
+
+clean_hdfs("/tmp",1)
