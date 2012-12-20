@@ -14,7 +14,7 @@ class hadoop::tasktracker {
 }
 
 class hadoop::namenode {
-  require hadoop::base    
+  require hadoop::base
   package { "hadoop-0.20-namenode":
     ensure => "latest",
   }
@@ -25,15 +25,31 @@ class hadoop::namenode {
 }
 
 class hadoop::jobtracker {
-  require hadoop::base    
+  require hadoop::base
   package { "hadoop-0.20-jobtracker":
     ensure => "latest",
   }
 }
 
+class hadoop::ganglia {
+  file { "/etc/ganglia/gmond.conf":
+    content => template("hadoop/gmond.erb"),
+  }
+}
+
+class hadoop::hosts_file {
+  file { "/etc/hosts":
+    owner => root,
+    group => root,
+    mode => 644,
+    source  => 'puppet:///modules/hadoop/etc/hosts',
+    ensure => present,
+  }
+}
+
 class hadoop::base {
   require hadoop::package
-  File {  
+  File {
     owner => root,
     group => root,
     mode  => 755,
@@ -42,7 +58,6 @@ class hadoop::base {
     ensure  => directory,
     source  => 'puppet:///modules/hadoop/usr/lib/hadoop-0.20/conf/',
     recurse => true,
-
   }
   file { "hdfs-site":
     path    => "/usr/lib/hadoop-0.20/conf/hdfs-site.xml",
@@ -59,9 +74,18 @@ class hadoop::base {
     ensure  => file,
     content => template("hadoop/core-site.xml.erb"),
   }
+  file { "hadoop-env":
+    path    => "/usr/lib/hadoop-0.20/conf/hadoop-env.sh",
+    ensure  => file,
+    content => template("hadoop/hadoop-env.sh.erb"),
+  }
   file { "/etc/sysctl.d/60-reboot":
     ensure  => file,
-    content => "kernel.panic = 10",
+    content => "kernel.panic=10",
+  }
+  file { "/etc/sysctl.d/60-swappyness":
+    ensure  => file,
+    content => "vm/swappiness=0",
   }
 }
 
@@ -75,18 +99,18 @@ class hadoop::package {
 class hadoop::apt {
   Package['curl'] -> Exec["add_cloudera_repokey"]
   File["/etc/apt/sources.list.d/cloudera.list"] ~> Exec["add_cloudera_repokey"]  ~> Exec["apt-get update"]
-  
+
   package { "curl":
     ensure => "latest",
   }
-  
+
   file { "/etc/apt/sources.list.d/cloudera.list":
-    owner  => "root", 
+    owner  => "root",
     group  => "root",
-    mode   => 0440, 
-    source => "puppet:///modules/hadoop/etc/apt/sources.list.d/cloudera.list", 
+    mode   => "0440",
+    source => "puppet:///modules/hadoop/etc/apt/sources.list.d/cloudera.list",
   }
-  
+
   exec { "add_cloudera_repokey":
     command     => "/usr/bin/curl -s http://archive.cloudera.com/debian/archive.key | sudo apt-key add -",
     refreshonly => true
@@ -98,5 +122,4 @@ class hadoop::apt {
     refreshonly => true,
   }
 }
-
 

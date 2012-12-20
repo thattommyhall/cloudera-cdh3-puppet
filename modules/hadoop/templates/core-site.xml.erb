@@ -3,10 +3,47 @@
 
 <!-- Put site-specific property overrides in this file. -->
 
-<configuration>    
-    <property>
-      <name>fs.default.name</name>
-      <value>hdfs://33.33.66.1000:9000</value>
-    </property>
-    
+<configuration>
+  <property>
+    <name>webinterface.private.actions</name>
+    <value>true</value>
+  </property>
+  <property>
+    <name>hadoop.tmp.dir</name>
+    <value>/var/apps/hadoop/tmp-cloudera-0.20.1</value>
+    <description>A base for other temporary directories.</description>
+  </property>
+  <property>
+    <name>fs.default.name</name>
+    <value>hdfs://MASTER:9000</value>
+  </property>
+  <property>
+    <name>fs.inmemory.size.mb</name>
+    <value>500</value>
+  </property>
+  <property>
+    <name>io.sort.factor</name>
+    <value>32</value>
+  </property>
+  <property>
+    <name>io.sort.mb</name>
+    <value>320</value>
+  </property>
+  <property>
+    <name>io.file.buffer.size</name>
+    <value>131072</value>
+  </property>
+  <property>
+    <name>io.compression.codecs</name>
+<value>org.apache.hadoop.io.compress.GzipCodec,org.apache.hadoop.io.compress.DefaultCodec,com.hadoop.compression.lzo.LzoCodec,org.apache.hadoop.io.compress.BZip2Codec,org.apache.hadoop.io.compress.SnappyCodec</value>
+  </property>
+  <property>
+    <name>fs.trash.interval</name>
+    <value>7200</value>
+    <final>true</final>
+  </property>
+  <property>
+    <name>topology.script.file.name</name>
+    <value>/usr/lib/hadoop-0.20/conf/topology.rb</value>
+  </property>
 </configuration>

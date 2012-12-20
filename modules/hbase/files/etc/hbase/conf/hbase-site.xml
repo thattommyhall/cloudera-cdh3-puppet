@@ -2,7 +2,7 @@
 <?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
 <!--
 /**
- * Copyright 2010 The Apache Software Foundation
+ * Copyright 2009 The Apache Software Foundation
  *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
@@ -22,4 +22,45 @@
  */
 -->
 <configuration>
+  <property>
+    <name>hbase.cluster.distributed</name>
+    <value>true</value>
+  </property>
+  <property>
+    <name>hbase.rootdir</name>
+    <value>hdfs://MASTER:9000/user/hbase</value>
+  </property>
+  <property>
+    <name>hbase.client.write.buffer</name>
+    <value>67108864</value>
+    <!-- 64mb - this gets times by hbase.regionserver.handler.count on the servers so equates to around 1.6GB -->
+  </property>
+  <property>
+    <name>hbase.regionserver.flushlogentries</name>
+    <value>1000</value>
+  </property>
+  <property>
+    <name>hbase.hregion.memstore.flush.size</name>
+    <value>134217728</value>
+    <!-- 128mb - bigger size means less flushes but each flush takes longer and can cause client timeouts -->
+  </property>
+  <property> 
+    <name>hbase.regionserver.codecs</name> 
+    <value>snappy</value>
+  </property>
+  <property>
+    <name>hbase.zookeeper.quorum</name>
+    <value>MASTER</value>
+    <description>Comma separated list of servers in the ZooKeeper Quorum.
+    For example, "host1.mydomain.com,host2.mydomain.com,host3.mydomain.com".
+    By default this is set to localhost for local and pseudo-distributed modes
+    of operation. For a fully-distributed setup, this should be set to a full
+    list of ZooKeeper quorum servers. If HBASE_MANAGES_ZK is set in hbase-env.sh
+    this is the list of servers which we will start/stop ZooKeeper on.
+    </description>
+  </property>
+  <property> 
+    <name>hbase.hregion.memstore.mslab.enabled</name> 
+    <value>true</value>
+  </property>
 </configuration>

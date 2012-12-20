@@ -3,14 +3,84 @@
 
 <!-- Put site-specific property overrides in this file. -->
 
+
+
 <configuration>
   <property>
     <name>dfs.name.dir</name>
-    <value>/var/hadoop/dfs/name</value>
+    <value>/var/apps/hadoop/tmp-cloudera-0.20.1/dfs/name</value>
   </property>
-  
+
+  <property>
+    <name>dfs.replication</name>
+    <value>3</value>
+  </property>
+
+  <property>
+    <name>dfs.permissions</name>
+    <value>false</value>
+  </property>
+
   <property>
     <name>dfs.data.dir</name>
     <value><%= hadoop_hdfs_data_dirs %></value>
   </property>
+
+  <property>
+    <name>dfs.block.size</name>
+    <value>134217728</value>
+  </property>
+
+  <property>
+    <name>dfs.webhdfs.enabled</name>
+    <value>true</value>
+  </property>
+
+  <property>
+    <name>dfs.datanode.max.xcievers</name>
+    <value>4096</value>
+  </property>
+
+  <property>
+    <name>dfs.datanode.handler.count</name>
+    <value>10</value>
+  </property>
+
+  <property>
+    <name>dfs.namenode.handler.count</name>
+    <value>50</value>
+  </property>
+
+  <property>
+    <name>dfs.heartbeat.interval</name>
+    <value>60</value>
+    <description>Determines datanode heartbeat interval in seconds.</description>
+  </property>
+
+  <property>
+    <name>dfs.heartbeat.recheck.interval</name>
+    <value>1800</value>
+    <description>Determines when machines are marked dead</description>
+  </property>
+
+  <property>
+    <name>heartbeat.recheck.interval</name>
+    <value>1800</value>
+    <description>If dfs... doesnot work</description>
+  </property>
+
+  <property>
+    <name>dfs.hosts.exclude</name>
+    <value>/usr/lib/hadoop-0.20/conf/dfs.hosts.exclude</value>
+    <final>true</final>
+  </property>
+
+<!--
+  May use in future if we get dead nodes
+  <name>dfs.socket.timeout</name>
+  <value>180000</value>
+  <description>dfs socket timeout</description>
+  </property>
+-->
+
 </configuration>
